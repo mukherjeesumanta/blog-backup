@@ -34,13 +34,22 @@ const blogSchema = new mongoose.Schema(
     images: [String],
     createdAt: {
       type: Date,
-      default: Date.now(),
-      select: false
+      default: Date.now()
     },
     user: {
       type: mongoose.Schema.ObjectId,
       ref: 'User',
       required: [true, 'Blog must belong to an author/ admin']
+    },
+    category: {
+      type: String,
+      default: 'Web development',
+      select: true
+    },
+    comments: {
+      type: Number,
+      default: 0,
+      select: true
     },
     /* lastUpdated: {
     type: Date,
@@ -61,6 +70,10 @@ const blogSchema = new mongoose.Schema(
 
 blogSchema.index({ ratingsAverage: -1, title: 1 });
 blogSchema.index({ slug: 1 });
+
+blogSchema.virtual('shortDescription').get(function() {
+  return this.description.substring(0, 50);
+});
 
 // DOCUMENT MIDDLEWARE: runs before .save() and .create()
 blogSchema.pre('save', function(next) {

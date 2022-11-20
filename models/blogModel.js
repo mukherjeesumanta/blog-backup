@@ -80,6 +80,12 @@ blogSchema.pre('save', function(next) {
   this.slug = slugify(this.title, { lower: true });
   next();
 });
+// DOCUMENT MIDDLEWARE: runs before .findByIdAndUpdate()
+blogSchema.pre('findOneAndUpdate', function(next) {
+  // this.slug = slugify(this.title, { lower: true });
+  this.getUpdate().slug = slugify(this.getUpdate().title, { lower: true });
+  next();
+});
 
 blogSchema.pre(/^find/, function(next) {
   this.populate({

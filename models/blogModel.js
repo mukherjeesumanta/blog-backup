@@ -7,12 +7,12 @@ const blogSchema = new mongoose.Schema(
   {
     title: {
       type: String,
-      required: [true, 'A tour must have a name'],
+      required: [true, 'A blog must have a title'],
       unique: true,
       trim: true,
-      maxlength: [50, 'A tour name must have less or equal then 50 characters'],
-      minlength: [3, 'A tour name must have more or equal then 3 characters']
-      // validate: [validator.isAlpha, 'Tour name must only contain characters']
+      maxlength: [50, 'A blog title must have less or equal then 50 characters'],
+      minlength: [3, 'A blog title must have more or equal then 3 characters']
+      // validate: [validator.isAlpha, 'Tour title must only contain characters']
     },
     slug: String,
     ratingsAverage: {
@@ -31,7 +31,10 @@ const blogSchema = new mongoose.Schema(
       trim: true
     },
     imageCover: String,
-    images: [String],
+    images: {
+      type: [String],
+      default: ['blog-1.jpg']
+    },
     createdAt: {
       type: Date,
       default: Date.now()

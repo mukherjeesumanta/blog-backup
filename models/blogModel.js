@@ -72,7 +72,7 @@ blogSchema.index({ ratingsAverage: -1, title: 1 });
 blogSchema.index({ slug: 1 });
 
 blogSchema.virtual('shortDescription').get(function() {
-  return this.description.substring(0, 50);
+  return this.description.substring(0, 200);
 });
 
 // DOCUMENT MIDDLEWARE: runs before .save() and .create()

@@ -1,5 +1,4 @@
 const catchAsync = require('./../utils/catchAsync');
-const APIFeatures = require('./../utils/apiFeatures');
 
 const Blog = require('../models/blogModel');
 const factory = require('./handlerFactory');
@@ -12,13 +11,8 @@ exports.setUserIds = (req, res, next) => {
 
 exports.getOwnBlogs = catchAsync(async (req, res, next) => {
   const filter = { user: req.user.id };
-  const features = new APIFeatures(Blog.find(filter), req.query)
-    .filter()
-    .sort()
-    .limitFields()
-    .paginate();
   // const doc = await features.query.explain();
-  const data = await features.query;
+  const data = await Blog.find(filter);
 
   // SEND RESPONSE
   res.status(200).json({

@@ -10,7 +10,7 @@ const blogSchema = new mongoose.Schema(
       required: [true, 'A blog must have a title'],
       unique: true,
       trim: true,
-      maxlength: [50, 'A blog title must have less or equal then 50 characters'],
+      maxlength: [100, 'A blog title must have less or equal then 50 characters'],
       minlength: [3, 'A blog title must have more or equal then 3 characters']
       // validate: [validator.isAlpha, 'Tour title must only contain characters']
     },

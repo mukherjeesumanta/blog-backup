@@ -6,9 +6,12 @@ const authController = require('./../controllers/authController');
 
 const router = express.Router();
 
-router.post('/signup', 
-  body('email').isEmail(),
-  body('password').isLength({ min: 8 }),
+router.post('/signup',
+  body('name', 'Name is required').isLength({ min: 3 }),
+  body('role', 'Role is required').notEmpty({ min: 3 }),
+  body('email', 'Valid email is required').isEmail(),
+  body('password', 'Password atleast 8 characters').isLength({ min: 8 }),
+  body('passwordConfirm', 'Confirm password atleast 8 characters').isLength({ min: 8 }),
   authController.signup
 );
 router.post('/login', authController.login);

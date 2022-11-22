@@ -1,6 +1,8 @@
 //const crypto = require('crypto');
 const { promisify } = require('util');
 const jwt = require('jsonwebtoken');
+const { validationResult } = require('express-validator');
+
 const User = require('./../models/userModel');
 const catchAsync = require('./../utils/catchAsync');
 const AppError = require('./../utils/appError');
@@ -35,6 +37,10 @@ const createSendToken = (user, statusCode, req, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  const errors = validationResult(req);
+  if (!errors.isEmpty()) {
+    return res.status(400).json({ errors: errors.array() });
+  }
   const newUser = await User.create({
     name: req.body.name,
     email: req.body.email,
